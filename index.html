@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Chutiyaap</title>
+</head>
+<body>
+  <!-- <h1>JavaScript Experiments!</h1>
+  <script src="./experiments.js"></script> -->
+
+  <style>
+    .c1 {
+      padding-top: 50px;
+      padding-right: 30px;
+      padding-bottom: 50px;
+      padding-left: 80px;
+    }
+
+    .wrapper {
+      height: 100vh;
+      /*This part is important for centering*/
+      display: grid;
+      place-items: center;
+    }
+
+    .typing-demo {
+      width: 22ch;
+      animation: typing 2s steps(22), blink .5s step-end infinite alternate;
+      white-space: nowrap;
+      overflow: hidden;
+      border-right: 3px solid;
+      font-family: monospace;
+      font-size: 2em;
+    }
+
+    @keyframes typing {
+      from {
+        width: 0
+      }
+    }
+        
+    @keyframes blink {
+      50% {
+        border-color: transparent
+      }
+    }
+  </style>
+
+  <div class="c1">
+    <span>Some use JavaScript, which may sometimes be preferable (literally adding a character at a time feels more like a real typewriter) and sometimes not be (potential accessibility concerns).</span>
+  </div>
+
+  <input placeholder="type into me!" class="input-to-copy" />
+  <!-- <p class="p-to-copy-to">Nothing has happened yet.</p> -->
+
+  <div class="button-container">
+    <button>submit</button>
+  </div>
+
+  <div class="wrapper">
+    <div class="typing-demo">
+      This is a typing demo.
+    </div>
+  </div>
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js" ></script>
+  <script src="./experiments.js"></script>
+  
+</body>
+</html>
