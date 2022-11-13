@@ -63,9 +63,17 @@ body, .quote-input {
 .incorrect {
   color: red;
   text-decoration: underline;
+  font-style: bold;
 }
 
 .current {
   color: blue;
   background-color: #A1922E;
+}
+
+.incorrect.current {
+  color: red;
+  background-color: #A1922E;
+  text-decoration: underline;
+  font-style: bold;
 }

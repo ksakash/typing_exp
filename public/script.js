@@ -8,7 +8,7 @@ function highLightCurrent() {
   const spanElement = quoteDisplayElement.querySelectorAll('span')[current_pointer]
   if (spanElement != null) {
     spanElement.classList.remove('correct')
-    spanElement.classList.remove('incorrect')
+    // spanElement.classList.remove('incorrect')
     spanElement.classList.add('current')
   }
 }
@@ -25,9 +25,16 @@ quoteInputElement.addEventListener('input', () => {
       characterSpan.classList.remove('incorrect')
       correct = false
     } else if (character === characterSpan.innerText) {
-      characterSpan.classList.add('correct')
-      characterSpan.classList.remove('incorrect')
-      characterSpan.classList.remove('current')
+      if (correct) {
+        characterSpan.classList.add('correct')
+        characterSpan.classList.remove('incorrect')
+        characterSpan.classList.remove('current')
+      }
+      else {
+        characterSpan.classList.remove('correct')
+        characterSpan.classList.add('incorrect')
+        characterSpan.classList.remove('current')
+        }
       if (correct) {
         current_pointer = index + 1
       }
