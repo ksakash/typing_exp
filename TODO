@@ -1,0 +1,9 @@
+-> implement percentage improvement for wpm and error count
+    -> the font color for wpm should change to green when wpm increase
+        and red when vice versa andn same case with error count in reverse
+    -> add text for wpm and error count to indicate them
+-> create some more code snippets from python as well
+-> create text with repeated words which are harder to write faster both in
+    code and in general
+-> implement a button that could take some input string and create a long text
+    to practice on the go
