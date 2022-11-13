@@ -1,14 +1,18 @@
 const RANDOM_QUOTE_API_URL = 'http://api.quotable.io/random'
 const quoteDisplayElement = document.getElementById('quoteDisplay')
 const quoteInputElement = document.getElementById('quoteInput')
-const timerElement = document.getElementById('timer')
+const wpmElement = document.getElementById('wpm')
+const errorElement = document.getElementById('error')
+
 var current_pointer = 0
+let num_mistakes = 0
+let timer_start = 0
+let timer_end = 0
 
 function highLightCurrent() {
   const spanElement = quoteDisplayElement.querySelectorAll('span')[current_pointer]
   if (spanElement != null) {
     spanElement.classList.remove('correct')
-    // spanElement.classList.remove('incorrect')
     spanElement.classList.add('current')
   }
 }
@@ -43,16 +47,24 @@ quoteInputElement.addEventListener('input', () => {
       characterSpan.classList.add('incorrect')
       characterSpan.classList.remove('current')
       correct = false
+      num_mistakes += 1
     }
   })
 
   highLightCurrent(current_pointer)
-
-  if (correct) renderNewQuote()
+  if (correct) {
+    timer_end = getTimerTime()
+    let total_time = timer_end - timer_start
+    let word_length = arrayQuote.length / 5
+    let wpm = (word_length * 60) / total_time
+    console.log (total_time, " ", word_length, " ", wpm)
+    wpmElement.innerText = wpm.toFixed(2).toString()
+    errorElement.innerText = num_mistakes.toString();
+    renderNewQuote()
+  }
 })
 
 function getRandomQuote() {
-  // return "int main () {\n\treturn 0;\n}"
   return fetch("/new_code")
     .then(response => response.json())
     .then(data => data.data)
@@ -79,20 +91,19 @@ async function renderNewQuote() {
   current_pointer = 0
   quoteInputElement.value = null
   startTimer()
+  timer_start = getTimerTime()
 }
 
 let startTime
 function startTimer() {
-  timerElement.innerText = 0
   startTime = new Date()
-  setInterval(() => {
-    timer.innerText = getTimerTime()
-  }, 1000)
 }
 
 function getTimerTime() {
   return Math.floor((new Date() - startTime) / 1000)
 }
 
+wpmElement.innerText = 0
+errorElement.innerText = 0
 renderNewQuote()
 highLightCurrent(current_pointer)
