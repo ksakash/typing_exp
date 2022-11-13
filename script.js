@@ -2,6 +2,16 @@ const RANDOM_QUOTE_API_URL = 'http://api.quotable.io/random'
 const quoteDisplayElement = document.getElementById('quoteDisplay')
 const quoteInputElement = document.getElementById('quoteInput')
 const timerElement = document.getElementById('timer')
+var current_pointer = 0
+
+function highLightCurrent() {
+  const spanElement = quoteDisplayElement.querySelectorAll('span')[current_pointer]
+  if (spanElement != null) {
+    spanElement.classList.remove('correct')
+    spanElement.classList.remove('incorrect')
+    spanElement.classList.add('current')
+  }
+}
 
 quoteInputElement.addEventListener('input', () => {
   const arrayQuote = quoteDisplayElement.querySelectorAll('span')
@@ -17,30 +27,49 @@ quoteInputElement.addEventListener('input', () => {
     } else if (character === characterSpan.innerText) {
       characterSpan.classList.add('correct')
       characterSpan.classList.remove('incorrect')
+      characterSpan.classList.remove('current')
+      if (correct) {
+        current_pointer = index + 1
+      }
     } else {
       characterSpan.classList.remove('correct')
       characterSpan.classList.add('incorrect')
+      characterSpan.classList.remove('current')
       correct = false
     }
   })
+
+  highLightCurrent(current_pointer)
 
   if (correct) renderNewQuote()
 })
 
 function getRandomQuote() {
-  return fetch(RANDOM_QUOTE_API_URL)
+  // return "int main () {\n\treturn 0;\n}"
+  return fetch("/new_code")
     .then(response => response.json())
-    .then(data => data.content)
+    .then(data => data.data)
 }
 
 async function renderNewQuote() {
   const quote = await getRandomQuote()
   quoteDisplayElement.innerHTML = ''
   quote.split('').forEach(character => {
-    const characterSpan = document.createElement('span')
-    characterSpan.innerText = character
-    quoteDisplayElement.appendChild(characterSpan)
+    if (character === '\n') {
+      const br = document.createElement('br')
+      quoteDisplayElement.appendChild(br);
+    }
+    else if (character === '\t') {
+      quoteDisplayElement.insertAdjacentHTML('beforeend', '&nbsp;&nbsp;&nbsp;&nbsp;')
+    }
+    else {
+      const characterSpan = document.createElement('span')
+      characterSpan.innerText = character
+      quoteDisplayElement.appendChild(characterSpan)
+    }
+
   })
+  current_pointer = 0
   quoteInputElement.value = null
   startTimer()
 }
@@ -59,3 +88,4 @@ function getTimerTime() {
 }
 
 renderNewQuote()
+highLightCurrent(current_pointer)
