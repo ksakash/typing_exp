@@ -61,6 +61,7 @@ quoteInputElement.addEventListener('input', () => {
     wpmElement.innerText = wpm.toFixed(2).toString()
     errorElement.innerText = num_mistakes.toString();
     renderNewQuote()
+    num_mistakes = 0
   }
 })
 
